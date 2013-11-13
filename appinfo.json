@@ -1,0 +1,17 @@
+{
+  "uuid": "53b71246-f1a2-4f45-af48-fd8510bc76ba",
+  "shortName": "hue_control",
+  "longName": "Hue Control",
+  "companyName": "Fathom Game",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
