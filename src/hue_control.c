@@ -15,6 +15,22 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   text_layer_set_text(text_layer, "Down");
 }
 
+void out_sent_handler(DictionaryIterator *sent, void *context) {
+	//Outgoing message was delivered
+}
+
+void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context) {
+	//Outgoing message failed
+}
+
+void in_received_handler(DictionaryIterator *received, void *context) {
+	//incoming message received
+}
+
+void in_dropped_handler(AppMessageResult reason, void *context) {
+	//incoming message dropped
+}
+
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
@@ -36,6 +52,11 @@ static void window_unload(Window *window) {
 }
 
 static void init(void) {
+  app_message_register_inbox_received(in_received_handler);
+  app_message_register_inbox_dropped(in_dropped_handler);
+  app_message_register_outbox_sent(out_sent_handler);
+  app_message_register_outbox_failed(out_failed_handler);
+  
   window = window_create();
   window_set_click_config_provider(window, click_config_provider);
   window_set_window_handlers(window, (WindowHandlers) {
@@ -43,6 +64,9 @@ static void init(void) {
     .unload = window_unload,
   });
   const bool animated = true;
+  const uint32_t inbound_size = 64;
+  const uint32_t outbound_size = 64;
+  app_message_open(inbound_size, outbound_size);
   window_stack_push(window, animated);
 }
 
