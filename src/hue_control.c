@@ -15,12 +15,8 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   text_layer_set_text(text_layer, "Down");
 }
 
-void out_sent_handler(DictionaryIterator *sent, void *context) {
-	//Outgoing message was delivered
-}
-
 void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context) {
-	//Outgoing message failed
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "App Message Failed to Send!");
 }
 
 void in_received_handler(DictionaryIterator *received, void *context) {
@@ -28,13 +24,22 @@ void in_received_handler(DictionaryIterator *received, void *context) {
 }
 
 void in_dropped_handler(AppMessageResult reason, void *context) {
-	//incoming message dropped
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "App Message Dropped!");
 }
 
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
+}
+
+static void app_message_init(void) {
+  // Register message handlers
+  app_message_register_inbox_received(in_received_handler);
+  app_message_register_inbox_dropped(in_dropped_handler);
+  app_message_register_outbox_failed(out_failed_handler);
+  // Init buffers
+  app_message_open(64, 64);
 }
 
 static void window_load(Window *window) {
@@ -52,21 +57,14 @@ static void window_unload(Window *window) {
 }
 
 static void init(void) {
-  app_message_register_inbox_received(in_received_handler);
-  app_message_register_inbox_dropped(in_dropped_handler);
-  app_message_register_outbox_sent(out_sent_handler);
-  app_message_register_outbox_failed(out_failed_handler);
-  
   window = window_create();
+  app_message_init();
   window_set_click_config_provider(window, click_config_provider);
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,
     .unload = window_unload,
   });
   const bool animated = true;
-  const uint32_t inbound_size = 64;
-  const uint32_t outbound_size = 64;
-  app_message_open(inbound_size, outbound_size);
   window_stack_push(window, animated);
 }
 
