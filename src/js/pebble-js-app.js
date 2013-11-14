@@ -20,7 +20,7 @@ Pebble.addEventListener("ready",
 
 Pebble.addEventListener("showConfiguration",
 						function(e) {
-							Pebble.openURL("www.google.com");
+							Pebble.openURL("http://www.google.com");
 						}					   
 );
 
