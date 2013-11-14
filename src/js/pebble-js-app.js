@@ -17,3 +17,16 @@ Pebble.addEventListener("ready",
 		Pebble.showSimpleNotificationOnPebble("Test Notify", "This is a test and only a test, if it was real this would be cool");
     }
 );
+
+Pebble.addEventListener("showConfiguration",
+						function(e) {
+							Pebble.openURL("www.google.com");
+						}					   
+);
+
+Pebble.addEventListener("configurationClosed",
+						function(e) {
+							var configuration = JSON.parse(e.configurationData);
+							console.log("Configuration window returned: " + e.configurationData);
+						}					   
+);
