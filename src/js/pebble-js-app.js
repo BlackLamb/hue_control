@@ -13,5 +13,7 @@ Pebble.addEventListener("ready",
 																 + " Error is: " + e.error.message);
 												  }
 	   );
+		
+		Pebble.showSimpleNotificationOnPebble("Test Notify", "This is a test and only a test, if it was real this would be cool");
     }
 );
