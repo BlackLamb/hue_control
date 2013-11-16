@@ -19,8 +19,8 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-	char *message = "Down Sent";
-	Tuple down_tuple = TupletCString(LIGHT_STATE, message);
+	//char *message = ;
+	Tuplet down_tuple = TupletCString(LIGHT_STATE, "Down Sent");
 	DictionaryIterator *iter;
 	app_message_outbox_begin(&iter);
 	
