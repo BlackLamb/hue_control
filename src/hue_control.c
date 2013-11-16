@@ -28,9 +28,9 @@ void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, voi
 
 void in_received_handler(DictionaryIterator *received, void *context) {
 	//incoming message received
-	Tuple *app_state_tuple = dic_find(received, APP_STATE);
-	Tuple *lights_tuple = dic_find(received, LIGHTS);
-	Tuple *light_state_tuple = dic_find(received, LIGHT_STATE);
+	Tuple *app_state_tuple = dict_find(received, APP_STATE);
+	Tuple *lights_tuple = dict_find(received, LIGHTS);
+	Tuple *light_state_tuple = dict_find(received, LIGHT_STATE);
 	
 	if (app_state_tuple) {
 		strncpy(mesg, app_state_tuple->value->cstring, 10);
