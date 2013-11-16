@@ -2,7 +2,7 @@ Pebble.addEventListener("ready",
     function(e) {
         console.log("Hello world! - Sent from your javascript application.");
 		
-		var transactionId = Pebble.sendAppMessage({'0': 42, '1': 'string value'},
+		var transactionId = Pebble.sendAppMessage({'0': 42, 'appstate': 'start app'},
 												  function(e) {
 												  	  console.log("Successfully delivered message with transactionId="
 															 + e.data.transactionId);
@@ -14,7 +14,7 @@ Pebble.addEventListener("ready",
 												  }
 	   );
 		
-		Pebble.showSimpleNotificationOnPebble("Test Notify", "This is a test and only a test, if it was real this would be cool");
+		//Pebble.showSimpleNotificationOnPebble("Test Notify", "This is a test and only a test, if it was real this would be cool");
     }
 );
 

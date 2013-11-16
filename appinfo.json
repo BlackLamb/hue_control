@@ -2,7 +2,9 @@
     "versionLabel": "1.0.0",
     "uuid": "53b71246-f1a2-4f45-af48-fd8510bc76ba",
     "appKeys": {
-        "bootup": 0
+        "lights": 2,
+        "appstate": 1,
+        "lightstate": 3
     },
     "longName": "Hue Control",
     "versionCode": 1,

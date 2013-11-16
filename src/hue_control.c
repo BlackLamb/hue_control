@@ -2,17 +2,24 @@
 
 static Window *window;
 static TextLayer *text_layer;
+static char mesg[10];
+
+enum {
+  APP_STATE = 0x1,
+  LIGHTS = 0x2,
+  LIGHT_STATE = 0x3,
+};
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Select");
+
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Up");
+
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Down");
+
 }
 
 void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context) {
@@ -21,6 +28,14 @@ void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, voi
 
 void in_received_handler(DictionaryIterator *received, void *context) {
 	//incoming message received
+	Tuple *app_state_tuple = dic_find(received, APP_STATE);
+	Tuple *lights_tuple = dic_find(received, LIGHTS);
+	Tuple *light_state_tuple = dic_find(received, LIGHT_STATE);
+	
+	if (app_state_tuple) {
+		strncpy(mesg, app_state_tuple->value->cstring, 10);
+		text_layer_set_text(text_layer, mesg);
+	}
 }
 
 void in_dropped_handler(AppMessageResult reason, void *context) {
@@ -47,7 +62,7 @@ static void window_load(Window *window) {
   GRect bounds = layer_get_bounds(window_layer);
 
   text_layer = text_layer_create((GRect) { .origin = { 0, 72 }, .size = { bounds.size.w, 20 } });
-  text_layer_set_text(text_layer, "Press a button");
+  text_layer_set_text(text_layer, "Loading...");
   text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(text_layer));
 }
