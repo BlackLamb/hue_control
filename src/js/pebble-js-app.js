@@ -30,3 +30,16 @@ Pebble.addEventListener("configurationClosed",
 							console.log("Configuration window returned: " + e.configurationData);
 						}					   
 );
+
+Pebble.addEventListener("appmessage",
+						function(e) {
+							console.log("message");
+							if(e.payload.lightstate) {
+								console.log(e.payload.lightstate);
+							}
+							else {
+								console.log("Raw Dump");
+								console.log(e.payload);
+							}
+						}
+);

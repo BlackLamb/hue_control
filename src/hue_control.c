@@ -19,7 +19,18 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-
+  Tuple down_tuple = TupletCString(LIGHT_STATE, "Down Sent");
+  DictionaryIterator *iter;
+  app_message_outbox_begin(&iter);
+	
+	if (iter == NULL) {
+		return;
+	}
+	
+	dict_write_tuplet(iter, &down_tuple);
+	dict_write_end(iter);
+	
+	app_message_outbox_send();
 }
 
 void out_failed_handler(DictionaryIterator *failed, AppMessageResult reason, void *context) {
